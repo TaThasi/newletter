@@ -1,10 +1,8 @@
-// pages/_app.js or src/app/layout.js
 
-import { Inter } from "next/font/google";
 import "@/shared/styles/globals.css";
 import Providers from "@/shared/utils/Provider";
-import localFont from "next/font/local"; // Note the correct import path
-
+import localFont from "next/font/local";
+import { ClerkProvider } from "@clerk/nextjs";
 const clashDisplay = localFont({
   src: '../assets/fonts/ClashDisplay-Variable.ttf',
   variable: '--font-clashDisplay',
@@ -18,10 +16,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${clashDisplay.variable}`}>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${clashDisplay.variable}`}>
+          <Providers>{children}</Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

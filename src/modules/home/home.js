@@ -8,6 +8,7 @@ import FeatureHighLight from "./features/features.highlight"
 import Pricing from "./features/pricing"
 import Footer from "@/shared/widgets/footer/footer"
 export default function Home() {
+    
     return (
         <div>
             <Header />
