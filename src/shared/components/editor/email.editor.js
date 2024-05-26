@@ -6,8 +6,9 @@ import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import DefaultJsonData from '@/assets/fonts/mails/default';
-
+import { Button } from '@nextui-org/react';
 import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
+import { saveEmail } from '@/actions/save.email';
 export default function Emaileditor({ subjectTitle }) {
     const [loading, setLoading] = useState(false);
     const [jsonData, setJsonData] = useState(DefaultJsonData);
@@ -15,6 +16,7 @@ export default function Emaileditor({ subjectTitle }) {
     const emailEditorRef = useRef(null);
     const router = useRouter();
 
+    
     const exportHtml = () => {
         if (emailEditorRef.current) {
             const unlayer = emailEditorRef.current.editor;
@@ -48,6 +50,25 @@ export default function Emaileditor({ subjectTitle }) {
         console.log("onReady");
     };
 
+
+    const saveDraft = () => {
+        const unplayer = emailEditorRef.current?.editor;
+        unplayer?.exportHtml(async (data) => {
+            const { design } = data;
+            await saveEmail({
+                title: subjectTitle,
+                content: JSON.stringify(design),
+                newsLetterOwnerId: user?.id
+            })
+            .then((res) => {
+                toast.success("Email saved successfully!");
+                router.push("/dashboard/write");
+            })
+
+        })   
+    }
+
+    
     return (
         <>
             {!loading && (
@@ -55,8 +76,24 @@ export default function Emaileditor({ subjectTitle }) {
                     {typeof window !== 'undefined' && (
                         <EmailEditor ref={emailEditorRef} minHeight={"80vh"} onReady={onReady} onLoad={onLoad} />
                     )}
+                    <div className="absolute bottom-0 flex items-center justify-end gap-4 right-0 w-full border-t p-3">
+                        <Button
+                        className="bg-transparent cursor-pointer flex items-center gap-1 text-black border border-[#00000048] text-lg rounded-lg"
+                        onClick={saveDraft}
+                        >
+                            <span className="opacity-[.7]">Save Draft</span>
+                        </Button>
+                        <Button
+                        className="bg-[#000] text-white cursor-pointer flex items-center gap-1 border text-lg rounded-lg"
+                        onClick={exportHtml}
+                        >
+                            <span>Send</span>
+                        </Button>
+                    </div>
                 </div>
             )}
+            
+            
         </>
     );
 }

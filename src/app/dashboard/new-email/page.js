@@ -1,5 +1,6 @@
 
 'use client'
+import IndexPageEmailEditor from "@/shared/components/editor/Index";
 import Emaileditor from "@/shared/components/editor/email.editor";
 import ICONS from "@/shared/utils/icons";
 import Link from "next/link";
@@ -19,7 +20,7 @@ export default function Page() {
                 </Link>
                 {/* {email editor} */}
                 <div className="my-5">
-                    <Emaileditor subjectTitle={subjectTitle} />
+                    <IndexPageEmailEditor subjectTitle={subjectTitle} />
                 </div>
             </div>
         </div>
