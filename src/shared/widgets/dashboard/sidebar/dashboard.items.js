@@ -57,7 +57,7 @@ const DashboardItems = ({ bottomContent }) => {
                 className="p-2 py-5 flex items-center"
                 href={
                   item.url === "/"
-                    ? `/subscribe?username=${user?.username}`
+                    ? `/subscribe?username=${user?.firstName}`
                     : item.url
                 }
               >

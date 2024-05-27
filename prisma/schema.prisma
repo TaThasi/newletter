@@ -23,6 +23,15 @@ model Email {
     @@unique([title, newsLetterOwnerId])
 }
 
+model Subscriber {
+    id String @id @default(uuid())
+    email String
+    newsLetterOwnerId String 
+    source String
+    status String
+    @@unique([email, newsLetterOwnerId])
+}
+
 
 
 

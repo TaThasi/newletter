@@ -9,8 +9,10 @@ import DefaultJsonData from '@/assets/fonts/mails/default';
 import { Button } from '@nextui-org/react';
 import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
 import { saveEmail } from '@/actions/save.email';
+import { GetEmailDetails } from '@/actions/get.mail-detail';
+
 export default function Emaileditor({ subjectTitle }) {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [jsonData, setJsonData] = useState(DefaultJsonData);
     const { user } = useUser();
     const emailEditorRef = useRef(null);
@@ -38,7 +40,7 @@ export default function Emaileditor({ subjectTitle }) {
     };
 
     useEffect(() => {
-        // getEmailDetails();
+        getEmailDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
@@ -67,7 +69,22 @@ export default function Emaileditor({ subjectTitle }) {
 
         })   
     }
-
+    
+    const getEmailDetails = async () => {
+        await GetEmailDetails({
+            title: subjectTitle,
+            newsLetterOwnerId: user?.id
+        })
+        .then((data) => {
+            if(data) {
+                setJsonData(JSON.parse(data?.content));
+            }
+            setLoading(false);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    };
     
     return (
         <>
