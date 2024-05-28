@@ -12,7 +12,7 @@ export const subscribe = async ({ email, username }) => {
         const newsLetterOwner = allUsers.data.find((user) => user.firstName === username);
         // console.log(newsLetterOwner);
         if (!newsLetterOwner) {
-            return { message: "Newsletter owner not found!" };
+            return { error: "Newsletter owner not found!" };
         }
 
         const isSubscribeExist = await prisma.subscriber.findUnique({
@@ -26,12 +26,12 @@ export const subscribe = async ({ email, username }) => {
 
 
         if (isSubscribeExist) {
-            return "Email already subscribed!";
+            return {error:"Email already subscribed!"};
         }
 
         const validateResponse = await validateEmail({ email });
         if (validateResponse.status === "invalid") {
-            return "Email is not valid!";
+            return {error: "Email is not valid!"};
         }
         console.log(validateResponse);
         const subscriber = await prisma.subscriber.create({
@@ -48,6 +48,7 @@ export const subscribe = async ({ email, username }) => {
         return subscriber;
     } catch (err) {
         console.log(err);
-        return "An error occurred!";
+        return {error: "An error occurred!"};
     }
 };
+

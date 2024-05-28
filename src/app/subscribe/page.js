@@ -14,9 +14,22 @@ export default function Page() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         await subscribe({
             email: value,
             username
+        })
+        .then((data) => {
+            setLoading(false);
+            if(data.error) {
+                toast.error(data.error);
+            } else {
+                toast.success("You are successfully subscribed!");
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            setLoading(false);
         })
     }
 

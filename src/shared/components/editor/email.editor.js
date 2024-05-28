@@ -10,6 +10,7 @@ import { Button } from '@nextui-org/react';
 import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
 import { saveEmail } from '@/actions/save.email';
 import { GetEmailDetails } from '@/actions/get.mail-detail';
+import { sendEmail } from '@/shared/utils/email.send';
 
 export default function Emaileditor({ subjectTitle }) {
     const [loading, setLoading] = useState(true);
@@ -27,14 +28,17 @@ export default function Emaileditor({ subjectTitle }) {
                 const { design, html } = data;
                 setJsonData(design);
                 // Uncomment the following lines to send email
-                // await sendEmail({
-                //     userEmail: ["sponsorship@becodemy.com"],
-                //     subject: subjectTitle,
-                //     content: html,
-                // }).then((res) => {
-                //     toast.success("Email sent successfully!");
-                //     router.push("/dashboard/write");
-                // });
+                await sendEmail({
+                    userEmail: ["skyforce204@gmail.com"],
+                    subject: subjectTitle,
+                    content: html,
+                }).then((res) => {
+                    toast.success("Email sent successfully!");
+                    router.push("/dashboard/write");
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
             });
         }
     };

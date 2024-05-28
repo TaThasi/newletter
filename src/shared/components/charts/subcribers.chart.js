@@ -1,29 +1,38 @@
 'use client'
-import { useState } from "react"
+
+import useSubscribersAnalytics from "@/shared/hooks/useSubscribersAnalytics";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 
 
 export default function SubscribersChart() {
-    const [SubscribersData, setSubscribersData] = useState([]);
+    const {SubscribersData, loading} = useSubscribersAnalytics();
+    
+    const data = [];
 
-    const data = [
-        {
-            month: "Jan 2024",
-            count: 2420
-        },
-        {
-            month: "Feb 2024",
-            count: 2321
-        },
-        {
-            month: "April 2024",
-            count: 1300
-        },
-        {
-            month: "May 2024",
-            count: 1020
-        },
-    ]
+    SubscribersData && SubscribersData?.last7Months?.forEach((element) => {
+        data.push({
+          month: element?.month,
+          count: element?.count
+        })
+    });
+    // const data = [
+    //     {
+    //         month: "Jan 2024",
+    //         count: 2420
+    //     },
+    //     {
+    //         month: "Feb 2024",
+    //         count: 2321
+    //     },
+    //     {
+    //         month: "April 2024",
+    //         count: 1300
+    //     },
+    //     {
+    //         month: "May 2024",
+    //         count: 1020
+    //     },
+    // ]
     return (
         <div className="my-5 p-5 border rounded bg-white w-full md:h-[55vh] xl:h-[60vh]">
         <div className="w-full flex">
@@ -36,7 +45,7 @@ export default function SubscribersChart() {
             <span className="pl-2 text-sm opacity-[.7]">Subscribers</span>
           </div>
         </div>
-        {false ? (
+        {loading ? (
           <div className="h-[85%] flex items-center justify-center w-full">
             <h5>Loading...</h5>
           </div>
