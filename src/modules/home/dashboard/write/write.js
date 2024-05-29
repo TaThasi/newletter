@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { getEmails } from "@/actions/get.email";
 import { useClerk } from "@clerk/nextjs";
 import Link from "next/link";
+import { deleteEmail } from "@/actions/delete.email";
 export default function Write() {
     const [emailTitle, setEmailTitle] = useState("");
     const [open, setOpen] = useState(false);
@@ -40,8 +41,14 @@ export default function Write() {
     }, [user])
 
     const deleteHanlder = async (id) => {
-        
+        await deleteEmail({
+            emailId: id
+        })
+        .then((res) => {
+            FindEmails();
+        })
     }
+
     return (
         <div className="w-full flex p-5 flex-wrap gap-6 relative">
             <div
@@ -61,6 +68,9 @@ export default function Write() {
                             <div key={email?.id} className="w-[200px] h-[200px] z-[0] relative bg-slate-50 flex flex-col items-center justify-center rounded border cursor-pointer">
                                 <span
                                     className="absolute block z-20 right-2 top-2 text-2xl cursor-pointer"
+                                    onClick={() => {
+                                        deleteHanlder(email?.id)
+                                    }}
                                 >
                                     {ICONS.delete}
                                 </span>

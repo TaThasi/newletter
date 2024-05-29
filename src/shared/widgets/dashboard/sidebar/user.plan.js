@@ -1,8 +1,12 @@
 
+import useSubscribersData from "@/shared/hooks/useSubscribersData";
 import ICONS from "@/shared/utils/icons";
 import { Slider } from "@nextui-org/slider";
 
-export default function UserPlan() {
+export default function UserPlan() {  
+    const {data, loading} = useSubscribersData();
+
+
     return (
         <div className="w-full my-3 p-3 bg-[#FDF1F8] rounded hover:shadow-xl cursor-pointer">
       <div className="w-full flex items-center">
@@ -20,11 +24,11 @@ export default function UserPlan() {
       <Slider
         aria-label="Player progress"
         hideThumb={true}
-        defaultValue={0}
+        defaultValue={1}
         className="max-w-md"
       />
       <h6 className="text-[#831743]">
-        0 of 2500 added
+        {loading ? "..." : data?.length}  of 2500 added
       </h6>
     </div>
     )
