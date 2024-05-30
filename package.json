@@ -16,6 +16,7 @@
     "@mui/x-data-grid": "^7.5.1",
     "@nextui-org/react": "^2.3.6",
     "@prisma/client": "^5.14.0",
+    "@stripe/stripe-js": "^3.4.1",
     "aws-sdk": "^2.1628.0",
     "framer-motion": "^11.2.6",
     "jotai": "^2.8.1",
@@ -31,6 +32,7 @@
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.23.1",
     "recharts": "^2.12.7",
+    "stripe": "^15.8.0",
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {
