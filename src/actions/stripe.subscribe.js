@@ -18,7 +18,7 @@ export const stripeSubscribe = async ({price, userId}) => {
             }
         })
         const checkoutSession = await stripe.checkout.sessions.create({
-            mode: "payment",
+            mode: "subscription",
             customer: stripeCustomerId.stripeCustomerId,
             line_items: [
               {
@@ -28,12 +28,11 @@ export const stripeSubscribe = async ({price, userId}) => {
             ],
             success_url: process.env.NEXT_PUBLIC_WEBSITE_URL + "/success",
             cancel_url: process.env.NEXT_PUBLIC_WEBSITE_URL + "/error",
-            
-            // subscription_data: {
-            //   metadata: {
-            //     payingUserId: userId,
-            //   },
-            // },
+            subscription_data: {
+              metadata: {
+                payingUserId: userId,
+              },
+            },
           });
       
           if (!checkoutSession.url) {

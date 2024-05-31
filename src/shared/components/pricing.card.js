@@ -8,10 +8,11 @@ import { useRouter } from "next/navigation";
 export default function PricingCard({active}) {
     const {user} = useUser();
     const router = useRouter();
+    console.log(user);
     const handleSubscription = async ({price}) => {
         await stripeSubscribe({
             price: price,
-            userId: user.id
+            userId: user?.id
         })
         .then((res) => {
             router.push(res);
@@ -109,12 +110,12 @@ export default function PricingCard({active}) {
                     ))}
                     <br />
                     <Button className="w-full text-xl !py-6" color="primary"
-                        onClick={() => handleSubscription({price: active === "Monthly" ? "price_1PM2b0KjxVruuqJuYB9YrURV" : "price_1PM2ciKjxVruuqJuyfJymWD3"})}
+                        onClick={() => handleSubscription({price: active === "Monthly" ? "price_1PMKHDKjxVruuqJu8u4xdTi0" : "price_1PMKHmKjxVruuqJu0uoH9Z36"})}
                     >
                         Get Started
                     </Button>
                     <p className="pt-1 opacity-[.7] text-center">
-                        30-day free trial of Scale features, then ${active === 'Monthly' ? '42' : '49'}/mo
+                        30-day free trial of Scale features, then ${active === 'Monthly' ? '49' : '42'}/mo
                     </p>
                 </div>
 
@@ -163,8 +164,8 @@ export default function PricingCard({active}) {
                         handleSubscription({
                         price:
                             active === "Monthly"
-                            ? "price_1PM2d4KjxVruuqJu6culzheK"
-                            : "price_1PM2cDKjxVruuqJu0xvoqHkl",
+                            ? "price_1PM9jaKjxVruuqJu09kP7zLi"
+                            : "price_1PMKGdKjxVruuqJuKTlJmCKu",
                         })
                     }
                     >
